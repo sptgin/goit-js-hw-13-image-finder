@@ -8,22 +8,57 @@ import debounce from 'lodash.debounce';
 import icons from 'material-design-icons';
 
 import imageSearchFormTemplate from './templates/imagesearchform.hbs';
-// import countryListTemplate from './templates/countrylist.hbs';
-// import countryCardTemplate from './templates/countrycard.hbs';
+import imagesListTemplate from './templates/imagegallery.hbs';
+import imageCardTemplate from './templates/imagecard.hbs';
 
 import SearchImageAPI from './apiService';
 import { template } from 'handlebars';
 
-const imageSearchInput = document.querySelector('.search-form');
+const imageSearchInput = document.querySelector('#search-form');
 const imageSearchList = document.querySelector('.gallery');
 const imageSearchCard = document.querySelector('.photo-card');
 const imageSearchAPI = new SearchImageAPI();
 
-//imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
+imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
 
 function imageSearch(event) {
   event.preventDefault();
-  imageSearchAPI.query = imageSearchInput.value;
+  imageSearchAPI.query = imageSearchInput.firstElementChild.value;
+  imageSearchAPI
+    .fetchImages()
+    .then(images => {
+      if (images.length !== 0) {
+        console.log('imageSearchListMake !!!');
+        imageSearchListMake(images);
+      } else {
+        alert({
+          text: 'No matces found !',
+          delay: 1000,
+        });
+      }
+    })
+    .catch(() => {
+      alert({
+        text: 'No data for search ...',
+        delay: 1000,
+      });
+    });
+}
+
+function imageSearchListMake(images) {
+  console.log('imageSearchListMake - START');
+  //imageSearchCard = images.map(imageCardTemplate).join(' ');
+
+  imageSearchList.insertAdjacentHTML(
+    'beforeend',
+    images.map(imagesListTemplate).join(' '),
+  );
+  console.log(imageSearchCard);
+  console.log('imageSearchListMake - DONE');
+}
+
+function imageSearchListClear() {
+  imageSearchList.innerHTML = '';
 }
 
 // function countrySearch(event) {
@@ -63,15 +98,6 @@ function imageSearch(event) {
 //     });
 // }
 
-// function countrySearchListMake(countres) {
-//   countrySearchList.insertAdjacentHTML(
-//     'beforeend',
-//     countres.map(countryListTemplate).join(' '),
-//   );
-// }
-// function countrySearchListClear() {
-//   countrySearchList.innerHTML = '';
-// }
 // function countrySearchCardMake(countres) {
 //   countrySearchCard.insertAdjacentHTML(
 //     'beforeend',
