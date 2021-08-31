@@ -28,8 +28,6 @@ function imageSearch(event) {
     .fetchImages()
     .then(images => {
       if (images.length !== 0) {
-        console.log('imageSearchListMake !!!');
-        console.log(images);
         imageSearchListMake(images);
       } else {
         alert({
@@ -50,70 +48,23 @@ function imageSearchListMake(images) {
   console.log('imageSearchListMake - START');
   console.log(images);
 
-  const imagesArray = images.map(arr => {
-    console.log(arr.previewURL);
-  });
+  // const imageSearchCardArray = images.map(imageCardTemplate).join(' ');
 
-  //imageSearchCard = images.Object.map(imageCardTemplate).join(' ');
+  // console.log(imageSearchCardArray);
 
-  //imageSearchCard = images.map(imageCardTemplate).join(' ');
-  //console.log(imageSearchCard);
+  imageSearchCard.insertAdjacentHTML(
+    'beforeend',
+    images.map(imageCardTemplate).join(' '),
+  );
 
-  //imageSearchList.insertAdjacentHTML(
-  //  'beforeend',
+  // imageSearchList.insertAdjacentHTML(
+  //   'beforeend',
   //   imageSearchCard.map(imagesListTemplate).join(' '),
   // );
-  // console.log(imageSearchCard);
+  // console.log(imageSearchList);
   console.log('imageSearchListMake - DONE');
 }
 
 function imageSearchListClear() {
   imageSearchList.innerHTML = '';
 }
-
-// function countrySearch(event) {
-//   event.preventDefault();
-//   countrySearchListClear();
-//   countrySearchCardClear();
-//   сountrySearchAPI.query = countrySearchInput.value;
-//   сountrySearchAPI
-//     .fetchCountries()
-//     .then(countres => {
-//       if (countres.length === 1) {
-//         countrySearchCardMake(countres);
-//       } else {
-//         if (countres.length > 1 && countres.length < 11) {
-//           countrySearchListMake(countres);
-//         } else {
-//           if (countres.length > 10) {
-//             alert({
-//               text: 'Too many matces found !',
-//               delay: 1000,
-//             });
-//           } else {
-//             alert({
-//               text: 'No matces found !',
-//               delay: 1000,
-//             });
-//           }
-//         }
-//       }
-//       countrySearchInput.value = '';
-//     })
-//     .catch(() => {
-//       alert({
-//         text: 'No data for search ...',
-//         delay: 1000,
-//       });
-//     });
-// }
-
-// function countrySearchCardMake(countres) {
-//   countrySearchCard.insertAdjacentHTML(
-//     'beforeend',
-//     countres.map(countryCardTemplate).join(' '),
-//   );
-// }
-// function countrySearchCardClear() {
-//   countrySearchCard.innerHTML = '';
-// }
