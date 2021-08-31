@@ -13,7 +13,7 @@ export default class SearchImageAPI {
     return fetch(url)
       .then(response => response.json())
       .then(images => {
-        return images;
+        return images.hits;
       })
       .catch();
   }

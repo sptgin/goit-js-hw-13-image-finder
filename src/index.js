@@ -29,6 +29,7 @@ function imageSearch(event) {
     .then(images => {
       if (images.length !== 0) {
         console.log('imageSearchListMake !!!');
+        console.log(images);
         imageSearchListMake(images);
       } else {
         alert({
@@ -47,13 +48,22 @@ function imageSearch(event) {
 
 function imageSearchListMake(images) {
   console.log('imageSearchListMake - START');
-  //imageSearchCard = images.map(imageCardTemplate).join(' ');
+  console.log(images);
 
-  imageSearchList.insertAdjacentHTML(
-    'beforeend',
-    images.map(imagesListTemplate).join(' '),
-  );
-  console.log(imageSearchCard);
+  const imagesArray = images.map(arr => {
+    console.log(arr.previewURL);
+  });
+
+  //imageSearchCard = images.Object.map(imageCardTemplate).join(' ');
+
+  //imageSearchCard = images.map(imageCardTemplate).join(' ');
+  //console.log(imageSearchCard);
+
+  //imageSearchList.insertAdjacentHTML(
+  //  'beforeend',
+  //   imageSearchCard.map(imagesListTemplate).join(' '),
+  // );
+  // console.log(imageSearchCard);
   console.log('imageSearchListMake - DONE');
 }
 
