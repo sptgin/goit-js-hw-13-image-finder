@@ -54,7 +54,7 @@ function imageSearchListMake(images) {
 
   imageSearchCard.insertAdjacentHTML(
     'beforeend',
-    images.map(imageCardTemplate).join(' '),
+    images.map(imageCardTemplate).map(imagesListTemplate).join(' '),
   );
 
   // imageSearchList.insertAdjacentHTML(
