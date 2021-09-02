@@ -6,16 +6,25 @@ const BASE_URL = 'https://pixabay.com/api/';
 export default class SearchImageAPI {
   constructor() {
     this.searchQuery = '';
+    this.page = 1;
   }
 
   fetchImages() {
-    const url = `${BASE_URL}?${TYPE}&${ORIENTATION}&q=${this.searchQuery}&page=1&per_page=12&key=${API_KEY}`;
+    const url = `${BASE_URL}?${TYPE}&${ORIENTATION}&q=${this.searchQuery}&page=${this.page}&per_page=12&key=${API_KEY}`;
     return fetch(url)
       .then(response => response.json())
       .then(images => {
         return images.hits;
       })
       .catch();
+  }
+
+  incrementPage() {
+    this.page += 1;
+  }
+
+  resetPage() {
+    this.page = 1;
   }
 
   get query() {

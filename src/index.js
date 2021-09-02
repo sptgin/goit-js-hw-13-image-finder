@@ -10,24 +10,40 @@ import icons from 'material-design-icons';
 import imageSearchFormTemplate from './templates/imagesearchform.hbs';
 import imagesListTemplate from './templates/imagegallery.hbs';
 import imageCardTemplate from './templates/imagecard.hbs';
-
 import SearchImageAPI from './apiService';
 import { template } from 'handlebars';
 
 const imageSearchInput = document.querySelector('#search-form');
 const imageSearchList = document.querySelector('.gallery');
 const imageSearchCard = document.querySelector('.photo-card');
+const imageSearchMoreButton = document.querySelector('#search-more');
 const imageSearchAPI = new SearchImageAPI();
 
 imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
+imageSearchMoreButton.addEventListener('click', imageSearcMore);
+
+imageSearchMoreButton.scrollIntoView({
+  behavior: 'smooth',
+  block: 'end',
+  inline: 'nearest',
+});
 
 function imageSearch(event) {
   event.preventDefault();
   if (imageSearchInput.firstElementChild.value === '') {
     imageSearchListClear();
+    imageSearchAPI.resetPage();
+    buttonNoDisplay(imageSearchMoreButton);
   } else {
     imageSearchGetData(imageSearchInput.firstElementChild.value);
+    buttonDisplay(imageSearchMoreButton);
   }
+}
+
+function imageSearcMore(event) {
+  event.preventDefault();
+  imageSearchAPI.incrementPage();
+  imageSearchGetData(imageSearchInput.firstElementChild.value);
 }
 
 function imageSearchGetData(query) {
@@ -63,22 +79,12 @@ function imageSearchListClear() {
   imageSearchList.innerHTML = '';
 }
 
-//=========================================================
+function buttonNoDisplay(element) {
+  element.classList.remove('button_display');
+  element.classList.add('button_nodisplay');
+}
 
-let observer = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        console.log('!!!');
-        //imageSearchGetData(imageSearchInput.firstElementChild.value);
-      }
-      observer.unobserve(entry.target);
-      observer.observe(document.querySelector('li:last-child'));
-    });
-  },
-  {
-    threshold: 1,
-  },
-);
-
-observer.observe(document.querySelector('li'));
+function buttonDisplay(element) {
+  element.classList.remove('button_nodisplay');
+  element.classList.add('button_display');
+}

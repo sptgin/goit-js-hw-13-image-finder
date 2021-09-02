@@ -24,9 +24,18 @@ img {
   border-bottom: 1px solid black;
 }
 
+h1 {
+  text-align: center;
+}
+
+.search-input {
+  width: 100%;
+}
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   padding: 0;
   list-style: none;
   margin-left: auto;
@@ -50,4 +59,14 @@ img {
 }
 .material-icons {
   margin-right: 10px;
+}
+
+.button_nodisplay {
+  display: none;
+}
+.button_display {
+  display: block;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
