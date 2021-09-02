@@ -26,26 +26,30 @@ function imageSearch(event) {
   if (imageSearchInput.firstElementChild.value === '') {
     imageSearchListClear();
   } else {
-    imageSearchAPI.query = imageSearchInput.firstElementChild.value;
-    imageSearchAPI
-      .fetchImages()
-      .then(images => {
-        if (images.length !== 0) {
-          imageSearchListMake(images);
-        } else {
-          alert({
-            text: 'No matces found !',
-            delay: 1000,
-          });
-        }
-      })
-      .catch(() => {
+    imageSearchGetData(imageSearchInput.firstElementChild.value);
+  }
+}
+
+function imageSearchGetData(query) {
+  imageSearchAPI.query = query;
+  imageSearchAPI
+    .fetchImages()
+    .then(images => {
+      if (images.length !== 0) {
+        imageSearchListMake(images);
+      } else {
         alert({
-          text: 'No data for search ...',
+          text: 'No matces found !',
           delay: 1000,
         });
+      }
+    })
+    .catch(() => {
+      alert({
+        text: 'No data for search ...',
+        delay: 1000,
       });
-  }
+    });
 }
 
 function imageSearchListMake(images) {
@@ -58,3 +62,23 @@ function imageSearchListMake(images) {
 function imageSearchListClear() {
   imageSearchList.innerHTML = '';
 }
+
+//=========================================================
+
+let observer = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        console.log('!!!');
+        //imageSearchGetData(imageSearchInput.firstElementChild.value);
+      }
+      observer.unobserve(entry.target);
+      observer.observe(document.querySelector('li:last-child'));
+    });
+  },
+  {
+    threshold: 1,
+  },
+);
+
+observer.observe(document.querySelector('li'));
