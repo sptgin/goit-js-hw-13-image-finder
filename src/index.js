@@ -22,7 +22,7 @@ const imageSearchAPI = new SearchImageAPI();
 imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
 imageSearchMoreButton.addEventListener('click', imageSearcMore);
 
-imageSearchMoreButton.scrollIntoView({
+imageSearchList.scrollIntoView({
   behavior: 'smooth',
   block: 'end',
   inline: 'nearest',
