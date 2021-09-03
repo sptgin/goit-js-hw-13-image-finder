@@ -12,21 +12,18 @@ import imagesListTemplate from './templates/imagegallery.hbs';
 import imageCardTemplate from './templates/imagecard.hbs';
 import SearchImageAPI from './apiService';
 import { template } from 'handlebars';
+import * as basicLightbox from 'basiclightbox';
 
 const imageSearchInput = document.querySelector('#search-form');
 const imageSearchList = document.querySelector('.gallery');
+
+const imageSearchListItem = document.querySelector('.tag-list__item');
 const imageSearchCard = document.querySelector('.photo-card');
 const imageSearchMoreButton = document.querySelector('#search-more');
 const imageSearchAPI = new SearchImageAPI();
 
 imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
 imageSearchMoreButton.addEventListener('click', imageSearcMore);
-
-imageSearchList.scrollIntoView({
-  behavior: 'smooth',
-  block: 'end',
-  inline: 'nearest',
-});
 
 function imageSearch(event) {
   event.preventDefault();
@@ -73,6 +70,10 @@ function imageSearchListMake(images) {
     'beforeend',
     images.map(imageCardTemplate).map(imagesListTemplate).join(' '),
   );
+  imageSearchList.scrollIntoView({
+    behavior: 'smooth',
+    block: 'end',
+  });
 }
 
 function imageSearchListClear() {
