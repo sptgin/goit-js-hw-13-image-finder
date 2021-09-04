@@ -19,20 +19,17 @@ const imageSearchCard = document.querySelector('.photo-card');
 const imageSearchMoreButton = document.querySelector('#search-more');
 const imageSearchAPI = new SearchImageAPI();
 
-imageSearchInput.addEventListener('input', debounce(imageSearch, 1000));
+imageSearchInput.addEventListener('submit', imageSearch);
 imageSearchMoreButton.addEventListener('click', imageSearcMore);
 imageSearchList.addEventListener('click', imageSearchShowFull);
 
 function imageSearch(event) {
   event.preventDefault();
-  if (imageSearchInput.firstElementChild.value === '') {
-    imageSearchListClear();
-    imageSearchAPI.resetPage();
-    buttonNoDisplay(imageSearchMoreButton);
-  } else {
-    imageSearchGetData(imageSearchInput.firstElementChild.value);
-    buttonDisplay(imageSearchMoreButton);
-  }
+  imageSearchListClear();
+  imageSearchAPI.resetPage();
+  buttonNoDisplay(imageSearchMoreButton);
+  imageSearchGetData(imageSearchInput.firstElementChild.value);
+  buttonDisplay(imageSearchMoreButton);
 }
 
 function imageSearcMore(event) {
@@ -68,10 +65,12 @@ function imageSearchListMake(images) {
     'beforeend',
     images.map(imageCardTemplate).map(imagesListTemplate).join(' '),
   );
-  imageSearchList.scrollIntoView({
-    behavior: 'smooth',
-    block: 'end',
-  });
+  if (imageSearchAPI.page > 1) {
+    imageSearchList.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
+  }
 }
 
 function imageSearchListClear() {
