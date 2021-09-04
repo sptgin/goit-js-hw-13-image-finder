@@ -4,14 +4,12 @@ import {
   defaultModules,
 } from '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
-import debounce from 'lodash.debounce';
 import icons from 'material-design-icons';
 
 import imageSearchFormTemplate from './templates/imagesearchform.hbs';
 import imagesListTemplate from './templates/imagegallery.hbs';
 import imageCardTemplate from './templates/imagecard.hbs';
 import SearchImageAPI from './apiService';
-import { template } from 'handlebars';
 import * as basicLightbox from 'basiclightbox';
 const imageSearchInput = document.querySelector('#search-form');
 const imageSearchList = document.querySelector('.gallery');
